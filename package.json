@@ -1,0 +1,27 @@
+{
+  "name": "radkovecsergej-js-home",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sergej-Radkovec/radkovecsergej-js-home.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sergej-Radkovec/radkovecsergej-js-home/issues"
+  },
+  "homepage": "https://github.com/Sergej-Radkovec/radkovecsergej-js-home#readme",
+  "devDependencies": {
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "jest": "^23.5.0"
+  }
+}
