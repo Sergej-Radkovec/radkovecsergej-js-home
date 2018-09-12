@@ -9,4 +9,4 @@ var tasksCompleted = {
 
 test('max Tasks for Elena', () => {
   expect(maxTasks(tasksCompleted)).toBe('Elena');
-})
+});

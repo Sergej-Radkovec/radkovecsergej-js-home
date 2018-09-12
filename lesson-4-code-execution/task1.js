@@ -1,3 +1,5 @@
+'use strict';
+
 function maxTasks(list) {
   var max = 0;
   var name;
