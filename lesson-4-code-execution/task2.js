@@ -2,7 +2,7 @@
 
 function multiplyNumeric(list) {
   for (var key in list) {
-    if (typeof (list[key]) == 'number') {
+    if (typeof (list[key]) === 'number') {
       list[key] *= 2;
     }
   }
