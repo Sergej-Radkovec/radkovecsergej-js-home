@@ -1,4 +1,4 @@
-const multiplyNumeric = require('./task2');
+var multiplyNumeric = require('./task2');
 
 var image = {
   width: 100,

@@ -1,4 +1,4 @@
-const maxTasks = require('./task1');
+var maxTasks = require('./task1');
 
 var tasksCompleted = {
   'Anna': 29,
