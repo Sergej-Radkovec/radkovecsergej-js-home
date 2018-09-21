@@ -59,4 +59,6 @@ var averageTipMark = calcAverageTip(mark);
 
 console.log((averageTipJohn > averageTipMark) ? averageTipJohn : averageTipMark);
 
-module.exports = calcAverageTip;
+module.exports.john = john;
+module.exports.mark = mark;
+module.exports.calcAverageTip = calcAverageTip;
