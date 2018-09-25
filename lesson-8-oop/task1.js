@@ -10,5 +10,5 @@ var question1 = new Question('Столица Беларуси?', ['Гродно'
 var question2 = new Question('Производитель смартфонов?', ['Груша', 'Персик', 'Яблоко'], 3);
 var question3 = new Question('Куда Маск отправил Теслу?', ['В космос', 'На дно океана', 'На марс'], 3);
 
-
+var questions = [question1, question2, question3];
 
