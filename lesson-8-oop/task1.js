@@ -12,3 +12,12 @@ var question3 = new Question('Куда Маск отправил Теслу?', [
 
 var questions = [question1, question2, question3];
 
+Question.prototype.askQuestion  = function() {
+  var strAnswers = '';
+  for (var i = 1; i <= this.answers.length; i++){
+    strAnswers = strAnswers + i + ')' + this.answers[i - 1] + ';' + '\n';
+  }
+  console.log(this.question + '\n' + strAnswers);
+};
+
+
