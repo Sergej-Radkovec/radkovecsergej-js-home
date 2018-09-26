@@ -45,7 +45,7 @@ Question.prototype.checkAnswer = function (answer) {
 examQuestion.checkAnswer(userAnswer);
 
 // 7. Private
-function QuestionPlagin(question, answers, correctAnswer) {
+function QuestionPrivate(question, answers, correctAnswer) {
   this.question = question;
   this.answers = answers;
   this.correctAnswer = correctAnswer;
@@ -64,12 +64,13 @@ function QuestionPlagin(question, answers, correctAnswer) {
     if (answer === self.correctAnswer) {
       console.log('Ваш ответ верен');
     } else {
-      console.log('Правильный ответ ' + this.correctAnswer);
+      console.log('Правильный ответ ' + self.correctAnswer);
     }
   }
 
   this.exam = function () {
     printQuestion();
-    checkAnswer(prompt('Номер вашего варианта ответа'), 10);
+    checkAnswer(parseInt(prompt('Номер вашего варианта ответа'), 10));
   };
 }
+
