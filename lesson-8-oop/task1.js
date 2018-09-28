@@ -46,25 +46,23 @@ examQuestion.checkAnswer(userAnswer);
 
 // 7. Private
 function QuestionPrivate(question, answers, correctAnswer) {
-  this.question = question;
-  this.answers = answers;
-  this.correctAnswer = correctAnswer;
-
-  var self = this;
+  var _question = question;
+  var _answers = answers;
+  var _correctAnswer = correctAnswer;
 
   function printQuestion() {
     var strAnswers = '';
-    for (var i = 1; i <= self.answers.length; i++) {
-      strAnswers = strAnswers + i + ')' + self.answers[i - 1] + ';' + '\n';
+    for (var i = 1; i <= _answers.length; i++) {
+      strAnswers = strAnswers + i + ')' + _answers[i - 1] + ';' + '\n';
     }
-    console.log(self.question + '\n' + strAnswers);
+    console.log(_question + '\n' + strAnswers);
   }
 
   function checkAnswer(answer) {
-    if (answer === self.correctAnswer) {
+    if (answer === _correctAnswer) {
       console.log('Ваш ответ верен');
     } else {
-      console.log('Правильный ответ ' + self.correctAnswer);
+      console.log('Правильный ответ ' + _correctAnswer);
     }
   }
 
@@ -74,3 +72,5 @@ function QuestionPrivate(question, answers, correctAnswer) {
   };
 }
 
+var questionExam = new QuestionPrivate('Столица Беларуси?', ['Гродно', 'Минск', 'Брест'], 2);
+questionExam.exam();
