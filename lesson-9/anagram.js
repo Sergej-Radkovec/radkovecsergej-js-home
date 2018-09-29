@@ -1,9 +1,11 @@
 'Use strict';
 
-function isPol(str) {
-  const strNormal = str.toLowerCase().split(' ').join('');
-  const strReverse = strNormal.split('').reverse().join('');
-  return strNormal === strReverse;
+function anClean(arr) {
+  const tmp = {};
+  return arr.filter(function (a) {
+    const b = a.toLowerCase().split('').sort().join('');
+    return b in tmp ? 0 : tmp[b] = 1;
+  });
 }
 
-module.exports = isPol;
+module.exports = anClean;
