@@ -14,7 +14,7 @@ describe('isPolidrom', () => {
   });
 
   it('1234321 is a polidrom', () => {
-    expect(isPol('Вася')).toBeTruthy();
+    expect(isPol('1234321')).toBeTruthy();
   });
 
   it('123456 is not a polidrom', () => {
