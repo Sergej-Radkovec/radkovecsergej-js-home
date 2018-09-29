@@ -1,9 +1,7 @@
 'Use strict';
 
-function isPol(str) {
-  const strNormal = str.toLowerCase().split(' ').join('');
-  const strReverse = strNormal.split('').reverse().join('');
-  return strNormal === strReverse;
+function anClean(arr) {
+
 }
 
-module.exports = isPol;
+module.exports = anClean;
