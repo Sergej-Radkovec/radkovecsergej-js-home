@@ -16,9 +16,10 @@
   Question.prototype.checkAnswer = function(ans) {
     if (ans === this.correct) {
       console.log('Correct answer!');
-
+      return 1;
     } else {
       console.log('Wrong answer. Try again :)')
+      return 0;
     }
   };
 
@@ -36,15 +37,21 @@
 
   var questions = [q1, q2, q3];
 
+  var  total = 0;
+
   (function exam() {
+
     var n = Math.floor(Math.random() * questions.length);
+
     questions[n].displayQuestion();
+
     var enteredData = prompt('Please select the correct answer.');
 
     if (enteredData !== "exit") {
       var answer = parseInt(enteredData);
-      questions[n].checkAnswer(answer);
+      total += questions[n].checkAnswer(answer);
       exam();
     }
   })();
+  console.log ('Result:' + total);
 })();
