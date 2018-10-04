@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Task1</title>
+  </head>
+  <body>
+    <script>
+      'use strict';
+
+      function culcVowels(str) {
+        var allVowels = 'аоиеёэыуюя';
+        var amountVowels = 0;
+        for (var i = 0; i <= str.length - 1; i++) {
+          if (allVowels.indexOf(str[i]) !== -1) {
+            amountVowels += 1;
+          }
+        }
+        return amountVowels;
+      }
+
+      console.log('в вашей строке гласных: ' + culcVowels(prompt('Для подсчёта гласных введите строку')));
+    </script>
+  </body>
+</html>
