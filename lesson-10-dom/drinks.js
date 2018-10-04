@@ -26,12 +26,12 @@ document.querySelector('.btn-save').addEventListener('click', function () {
   const nameDrink = elemName.value;
 
   const elemAlcohol = frmSave.elements.alcohol;
-  const alcogolDrink = elemAlcohol.value;
+  const alcoholDrink = elemAlcohol.value;
 
   const elemRecipe = frmSave.elements.recipe;
   const recipeDrink = elemRecipe.value;
 
-  drinkStorage.addValue(nameDrink, [alcogolDrink, recipeDrink]);
+  drinkStorage.addValue(nameDrink, [alcoholDrink, recipeDrink]);
   frmSave.reset();
 });
 
@@ -41,10 +41,13 @@ document.querySelector('.btn-print-info').addEventListener('click', function () 
   printWindow.innerHTML = '';
   const namePrintDrink = document.getElementById('nameDrink').value;
   const drinkInfo = drinkStorage.getValue(namePrintDrink);
-  document.getElementById('nameDrink').value = '';
-  printWindow.innerHTML =  'напиток: ' +  '<strong>' + namePrintDrink + '</strong>' + '<br>'
-    + 'алкогольный: ' + '<strong>' + drinkInfo[0] + '</strong><br>' + 'рецепт приготовления:'
-    + '<br><strong>' + drinkInfo[1] + '</strong>';
+  document.getElementById('nameDrink').value = ''
+  if (drinkStorage[namePrintDrink]) {
+    printWindow.innerHTML =  'напиток: ' +  '<strong>' + namePrintDrink + '</strong>' + '<br>'
+      + 'алкогольный: ' + '<strong>' + drinkInfo[0] + '</strong><br>' + 'рецепт приготовления:'
+      + '<br><strong>' + drinkInfo[1] + '</strong>' || 'Такого напитка не найдено';} else {
+    printWindow.innerHTML = 'Такого напитка нет в базе'
+  }
 });
 
 document.querySelector('.btn-drink-list').addEventListener('click', function () {
@@ -55,6 +58,10 @@ document.querySelector('.btn-drink-list').addEventListener('click', function () 
 document.querySelector('.btn-delete-drink').addEventListener('click', function () {
   printWindow.innerHTML = '';
   const nameDeleteDrink = document.getElementById('nameDeleteDrink').value;
-  drinkStorage.deleteValue(nameDeleteDrink);
-  printWindow.innerHTML = 'Напиток ' + nameDeleteDrink + ' удалён';
+  if (drinkStorage[nameDeleteDrink]) {
+    drinkStorage.deleteValue(nameDeleteDrink);
+    printWindow.innerHTML = 'Напиток ' + nameDeleteDrink + ' удалён';
+  } else {
+    printWindow.innerHTML = 'Напиток ' + nameDeleteDrink + ' не найден';
+  }
 });
