@@ -41,12 +41,13 @@ document.querySelector('.btn-print-info').addEventListener('click', function () 
   printWindow.innerHTML = '';
   const namePrintDrink = document.getElementById('nameDrink').value;
   const drinkInfo = drinkStorage.getValue(namePrintDrink);
-  document.getElementById('nameDrink').value = ''
+  document.getElementById('nameDrink').value = '';
   if (drinkStorage[namePrintDrink]) {
     printWindow.innerHTML =  'напиток: ' +  '<strong>' + namePrintDrink + '</strong>' + '<br>'
       + 'алкогольный: ' + '<strong>' + drinkInfo[0] + '</strong><br>' + 'рецепт приготовления:'
-      + '<br><strong>' + drinkInfo[1] + '</strong>' || 'Такого напитка не найдено';} else {
-    printWindow.innerHTML = 'Такого напитка нет в базе'
+      + '<br><strong>' + drinkInfo[1] + '</strong>';
+  } else {
+    printWindow.innerHTML = 'Такого напитка нет в базе';
   }
 });
 
