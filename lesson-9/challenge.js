@@ -39,7 +39,7 @@
 
   var  total = 0;
 
-  (function exam() {
+  function exam() {
 
     var n = Math.floor(Math.random() * questions.length);
 
@@ -52,6 +52,7 @@
       total += questions[n].checkAnswer(answer);
       exam();
     }
-  })();
+  }
+  exam();
   console.log ('Result:' + total);
 })();
