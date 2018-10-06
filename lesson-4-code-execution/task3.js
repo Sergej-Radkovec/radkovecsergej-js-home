@@ -3,12 +3,12 @@
 var res = [];
 var sum = 0;
 
-while (true) {
-  var value = prompt('Введите число', '');
-  if (value === null) break;
-  sum += +value;
-  res.push(+value);
-}
+do {
+  var input = prompt('Введите число', '');
+  var value = parseInt(input);
+  sum += value;
+  res.push(value);
+} while (input !== null);
 
 console.log(sum);
 
