@@ -1,11 +1,15 @@
 'Use strict';
 
 function anClean(arr) {
-  const tmp = {};
-  return arr.filter(function (a) {
-    const b = a.toLowerCase().split('').sort().join('');
-    return b in tmp ? 0 : tmp[b] = 1;
-  });
+  var newArr = [];
+  var tmp = {};
+  for (var i = 0; i < arr.length; i++) {
+    var sortArrElement = arr[i].toLowerCase().split('').sort().join('');
+    if (sortArrElement in tmp) continue;
+    newArr.push(arr[i]);
+    tmp[sortArrElement] = 1;
+  }
+  return newArr;
 }
 
 module.exports = anClean;
