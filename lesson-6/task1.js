@@ -1,6 +1,6 @@
 var john = {
   bills: [124, 48, 268, 180, 42],
-  tipCalculatorJohn: function () {
+  tipCalculator: function () {
     var percentage;
     var self = this;
     self.tips = [];
@@ -22,7 +22,7 @@ var john = {
 
 var mark = {
   bills: [77, 375, 110, 45],
-  tipCalculatorMark: function () {
+  tipCalculator: function () {
     var percentage;
     var self = this;
     self.tips = [];
@@ -42,8 +42,8 @@ var mark = {
   }
 };
 
-john.tipCalculatorJohn();
-mark.tipCalculatorMark();
+john.tipCalculator();
+mark.tipCalculator();
 
 function calcAverageTip(name) {
   var sumTips = 0;
