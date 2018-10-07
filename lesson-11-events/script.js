@@ -23,6 +23,10 @@
             cloneForm.appendChild(labelRadio);
           }
           break;
+        case 'checkbox':
+          var checkbox = inputCheckboxCreate(obj);
+          cloneForm.appendChild(checkbox);
+          break;
         case 'select':
           var select = selectCreate(obj);
           cloneForm.appendChild(select);
@@ -77,6 +81,16 @@
       }
       return allRadio;
     }
+
+    function inputCheckboxCreate(obj) {
+      var checkboxInput = document.createElement('input');
+      checkboxInput.setAttribute('name', obj.name);
+      checkboxInput.setAttribute('id', obj.name);
+      checkboxInput.setAttribute('type', obj.type);
+      checkboxInput.setAttribute('value', obj.value);
+      return checkboxInput;
+    }
+
   }
 
   var doc = document;
@@ -98,7 +112,8 @@
       variants: [
         {text: 'Бесплатное', value: 'free'},
         {text: 'Платное', value: 'paid'},
-        {text: 'VIP', value: 'vip'}], width: 200}];
+        {text: 'VIP', value: 'vip'}], width: 200},
+    {label: 'Разрешить отзывы:', type: 'checkbox', name: 'resolution', value: 1}];
 
 
   generateForm(container, origForm, formFields);
