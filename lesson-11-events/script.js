@@ -36,6 +36,10 @@
           var textarea = textareaCreate(obj);
           cloneForm.appendChild(textarea);
           break;
+        case 'submit':
+          var submit = submitCreate(obj);
+          cloneForm.appendChild(submit);
+          break;
       }
       addBr();
     }
@@ -104,6 +108,12 @@
       return textarea;
     }
 
+    function submitCreate(obj) {
+      var submit = document.createElement('input');
+      submit.setAttribute('value', obj.value);
+      submit.setAttribute('type', obj.type);
+      return submit;
+    }
   }
 
   var doc = document;
@@ -127,7 +137,8 @@
         {text: 'Платное', value: 'paid'},
         {text: 'VIP', value: 'vip'}], width: 200},
     {label: 'Разрешить отзывы:', type: 'checkbox', name: 'resolution', value: 1},
-    {label: 'Описание сайта:', type: 'textarea', name: 'description', width: 400}];
+    {label: 'Описание сайта:', type: 'textarea', name: 'description', width: 400},
+    {type: 'submit', value: 'Опубликовать'}];
 
 
   generateForm(container, origForm, formFields);
