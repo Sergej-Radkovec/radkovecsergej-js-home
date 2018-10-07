@@ -3,50 +3,60 @@
 
     var cloneForm = origForm.cloneNode(false);
 
+    var table = document.createElement('table');
+
+    cloneForm.appendChild(table);
+
     formFields.forEach(addFormElement);
 
     parent.replaceChild(cloneForm, origForm);
 
     function addFormElement(obj) {
+      var row = document.createElement('tr');
+      table.appendChild(row);
+      var cal1 = document.createElement('td');
+      row.appendChild(cal1);
       var label = labelCreate(obj.name, obj.label);
-      cloneForm.appendChild(label);
+      cal1.appendChild(label);
+      var cal2 = document.createElement('td');
+      row.appendChild(cal2);
       switch (obj.type) {
         case 'text':
           var textInput = inputTextCreate(obj);
-          cloneForm.appendChild(textInput);
+          cal2.appendChild(textInput);
           break;
+
         case 'radio':
           var radioInput = inputRadioCreate(obj);
           for (var i = 0; i < radioInput.length; i++) {
-            cloneForm.appendChild(radioInput[i]);
+            cal2.appendChild(radioInput[i]);
             var labelRadio = labelCreate(obj.variants[i].value, obj.variants[i].text);
-            cloneForm.appendChild(labelRadio);
+            cal2.appendChild(labelRadio);
           }
           break;
+
         case 'checkbox':
           var checkbox = inputCheckboxCreate(obj);
-          cloneForm.appendChild(checkbox);
+          cal2.appendChild(checkbox);
           break;
+
         case 'select':
           var select = selectCreate(obj);
-          cloneForm.appendChild(select);
+          cal2.appendChild(select);
           break;
         case 'textarea':
-          addBr();
+          cal1.setAttribute('colspan', 2);
+          var br = document.createElement('br');
+          cal1.appendChild(br);
           var textarea = textareaCreate(obj);
-          cloneForm.appendChild(textarea);
+          cal1.appendChild(textarea);
           break;
+
         case 'submit':
           var submit = submitCreate(obj);
-          cloneForm.appendChild(submit);
+          cal1.appendChild(submit);
           break;
       }
-      addBr();
-    }
-
-    function addBr() {
-      var br = document.createElement('br');
-      cloneForm.appendChild(br);
     }
 
     function labelCreate(name, text) {
@@ -61,6 +71,7 @@
       textInput.setAttribute('name', obj.name);
       textInput.setAttribute('id', obj.name);
       textInput.setAttribute('type', obj.type);
+      textInput.setAttribute('style', 'width: ' + obj.width + 'px');
       return textInput;
     }
 
@@ -68,6 +79,7 @@
       var select = document.createElement('select');
       select.setAttribute('name', obj.name);
       select.setAttribute('id', obj.name);
+      select.setAttribute('style', 'width: ' + obj.width + 'px');
       for (var i = 0; i < obj.variants.length; i++) {
         var option = document.createElement('option');
         option.setAttribute('value', obj.variants[i].value);
@@ -105,6 +117,7 @@
       textarea.setAttribute('name', obj.name);
       textarea.setAttribute('id', obj.name);
       textarea.setAttribute('type', obj.type);
+      textarea.setAttribute('style', 'width: ' + obj.width + 'px');
       return textarea;
     }
 
@@ -112,6 +125,7 @@
       var submit = document.createElement('input');
       submit.setAttribute('value', obj.value);
       submit.setAttribute('type', obj.type);
+      submit.setAttribute('style', 'width: ' + obj.width + 'px');
       return submit;
     }
   }
@@ -120,28 +134,25 @@
   var container = doc.body;
   var origForm = doc.forms.addSiteForm;
   var formFields = [
-    {label: 'Разработчики:', type: 'text', name: 'dev', width: 200},
-    {label: 'Название сайта:', type: 'text', name: 'name', width: 200},
-    {label: 'URL сайта:', type: 'text', name: 'url', width: 200},
-    {label: 'Дата запуска сайта:', type: 'text', name: 'date', width: 200},
-    {label: 'Посетителей в сутки:', type: 'text', name: 'count', width: 200},
-    {label: 'E-mail для связи:', type: 'text', name: 'email', width: 200},
+    {label: 'Разработчики:', type: 'text', name: 'dev', width: 400},
+    {label: 'Название сайта:', type: 'text', name: 'name', width: 400},
+    {label: 'URL сайта:', type: 'text', name: 'url', width: 300},
+    {label: 'Дата запуска сайта:', type: 'text', name: 'date', width: 150},
+    {label: 'Посетителей в сутки:', type: 'text', name: 'count', width: 150},
+    {label: 'E-mail для связи:', type: 'text', name: 'email', width: 250},
     {label: 'Рубрика каталога:', type: 'select', name: 'catalog',
       variants: [
         {text: 'здоровье', value: 'health'},
         {text: 'домашний уют', value: 'comfort'},
-        {text: 'бытовая техника', value: 'appliances'}], width: 200},
+        {text: 'бытовая техника', value: 'appliances'}], width: 250},
     {label: 'Размещение:', type: 'radio', name: 'placing',
       variants: [
         {text: 'Бесплатное', value: 'free'},
         {text: 'Платное', value: 'paid'},
-        {text: 'VIP', value: 'vip'}], width: 200},
+        {text: 'VIP', value: 'vip'}]},
     {label: 'Разрешить отзывы:', type: 'checkbox', name: 'resolution', value: 1},
-    {label: 'Описание сайта:', type: 'textarea', name: 'description', width: 400},
+    {label: 'Описание сайта:', type: 'textarea', name: 'description', width: 500},
     {type: 'submit', value: 'Опубликовать'}];
-
 
   generateForm(container, origForm, formFields);
 })();
-
-
