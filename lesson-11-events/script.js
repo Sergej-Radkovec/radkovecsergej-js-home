@@ -31,6 +31,11 @@
           var select = selectCreate(obj);
           cloneForm.appendChild(select);
           break;
+        case 'textarea':
+          addBr();
+          var textarea = textareaCreate(obj);
+          cloneForm.appendChild(textarea);
+          break;
       }
       addBr();
     }
@@ -91,6 +96,14 @@
       return checkboxInput;
     }
 
+    function textareaCreate(obj) {
+      var textarea = document.createElement('textarea');
+      textarea.setAttribute('name', obj.name);
+      textarea.setAttribute('id', obj.name);
+      textarea.setAttribute('type', obj.type);
+      return textarea;
+    }
+
   }
 
   var doc = document;
@@ -113,7 +126,8 @@
         {text: 'Бесплатное', value: 'free'},
         {text: 'Платное', value: 'paid'},
         {text: 'VIP', value: 'vip'}], width: 200},
-    {label: 'Разрешить отзывы:', type: 'checkbox', name: 'resolution', value: 1}];
+    {label: 'Разрешить отзывы:', type: 'checkbox', name: 'resolution', value: 1},
+    {label: 'Описание сайта:', type: 'textarea', name: 'description', width: 400}];
 
 
   generateForm(container, origForm, formFields);
