@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   function generateForm(parent, origForm, formFields) {
 
