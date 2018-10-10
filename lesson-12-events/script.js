@@ -22,7 +22,7 @@ function addAbsolutePos(elements) {
 
 function startDrag(EO) {
   EO = EO || window.event;
-  var selectElement = EO.path[0];
+  var selectElement = EO.target;
   if (selectElement.tagName === 'IMG') {
     dragImg = selectElement;
     EO.preventDefault();
