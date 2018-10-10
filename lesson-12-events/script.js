@@ -1,28 +1,40 @@
 'use strict';
 
-var dragImg = document.getElementById('img1');
+var dragImg = null;
 
 var dragShiftX = 0;
 var dragShiftY = 0;
+var zIndex = 0;
 
-dragImg.addEventListener('mousedown', function (MD) {
-  MD.preventDefault();
-  console.log(MD);
-  dragShiftX = MD.pageX - dragImg.offsetLeft;
-  dragShiftY = MD.pageY - dragImg.offsetTop;
-  console.log(dragShiftX);
-  console.log(dragShiftY);
+function startDrag(EO) {
+  EO = EO || window.event;
+  var selectElement = EO.path[0];
+  if (selectElement.tagName === 'IMG') {
+    dragImg = selectElement;
+    EO.preventDefault();
+    dragShiftX = EO.pageX - dragImg.offsetLeft;
+    dragShiftY = EO.pageY - dragImg.offsetTop;
+    window.onmousemove = drag;
+    zIndex += 1;
+  }
+}
 
-  window.onmousemove = function (EO) {
-    dragImg.style.position = 'absolute';
-    dragImg.style.left = EO.pageX - dragShiftX + 'px';
-    dragImg.style.top = EO.pageY - dragShiftY + 'px';
-  };
+function drag(EO) {
+  EO = EO || window.event;
+  dragImg.style.position = 'absolute';
+  dragImg.style.left = EO.pageX - dragShiftX + 'px';
+  dragImg.style.top = EO.pageY - dragShiftY + 'px';
+  dragImg.style.zIndex = zIndex;
+}
 
-  window.addEventListener('mouseup', function () {
-    window.onmousemove = null;
-  });
-});
+function endDrag() {
+  dragImg = null;
+  window.onmousemove = null;
+  dragShiftX = 0;
+  dragShiftY = 0;
+}
 
+window.addEventListener('mousedown', startDrag);
+window.addEventListener('mouseup', endDrag);
 
 
