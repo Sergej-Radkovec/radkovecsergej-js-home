@@ -29,14 +29,13 @@ function startDrag(EO) {
     dragShiftX = EO.pageX - dragImg.offsetLeft;
     dragShiftY = EO.pageY - dragImg.offsetTop;
     window.onmousemove = drag;
-    zIndex += 1;
+    zIndex++;
   }
 }
 
 function drag(EO) {
   EO = EO || window.event;
   dragImg.style.cursor = 'move';
-  dragImg.style.position = 'absolute';
   dragImg.style.left = EO.pageX - dragShiftX + 'px';
   dragImg.style.top = EO.pageY - dragShiftY + 'px';
   dragImg.style.zIndex = zIndex;
