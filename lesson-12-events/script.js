@@ -9,14 +9,12 @@ var zIndex = 0;
 var allIMG = document.querySelectorAll('img');
 
 function addAbsolutePos(elements) {
-  for (var i = 0; i < elements.length; i++) {
-    var selectElem =  elements[i];
+  var i = elements.length - 1;
+  for (; i >= 0; i--) {
+    var selectElem = elements[i];
     selectElem.style.top = selectElem.offsetTop + 'px';
     selectElem.style.left = selectElem.offsetLeft + 'px';
-  }
-
-  for (var j = 0; j < elements.length; j++) {
-    elements[j].style.position = 'absolute';
+    selectElem.style.position = 'absolute';
   }
 }
 
