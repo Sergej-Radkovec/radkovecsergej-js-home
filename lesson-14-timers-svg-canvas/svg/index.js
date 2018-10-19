@@ -35,7 +35,7 @@ function createClockFace() {
     let angle = number * 30;
     let x = baseRadius + numbersBaseRadius * Math.sin((angle) / 180 * Math.PI);
     let y = baseRadius - numbersBaseRadius * Math.cos((angle) / 180 * Math.PI);
-    clockFace.appendChild(createHourCircle(x, y, number));
+    clockFace.appendChild(createHourCircle(x, y));
     clockFace.appendChild(createNumberCircle(x, y, number));
   }
   return clockFace;
@@ -110,7 +110,7 @@ function rotateHandle(handle, degree) {
 
 function updateDigitalWatch(hour, minute, second) {
   let digital = document.getElementById('digits');
-  digital.textContent = addZeroToNumber(hour) + ':' +  addZeroToNumber(minute) + ':' +  addZeroToNumber(second);
+  digital.textContent = addZeroToNumber(hour) + ':' + addZeroToNumber(minute) + ':' + addZeroToNumber(second);
 }
 
 function addZeroToNumber(currentTime) {
