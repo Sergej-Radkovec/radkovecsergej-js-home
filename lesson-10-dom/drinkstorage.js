@@ -1,23 +1,5 @@
 'use strict';
 
-function THashStorage() {}
-
-THashStorage.prototype.addValue = function (key, value) {
-  this[key] = value;
-};
-
-THashStorage.prototype.getValue = function (key) {
-  return this[key];
-};
-
-THashStorage.prototype.deleteValue = function (key) {
-  delete this[key];
-};
-
-THashStorage.prototype.getKeys = function () {
-  return Object.keys(this);
-};
-
 const drinkStorage =  new THashStorage();
 
 document.querySelector('.btn-save').addEventListener('click', function () {
@@ -42,13 +24,9 @@ document.querySelector('.btn-print-info').addEventListener('click', function () 
   const namePrintDrink = document.getElementById('nameDrink').value;
   const drinkInfo = drinkStorage.getValue(namePrintDrink);
   document.getElementById('nameDrink').value = '';
-  if (drinkStorage[namePrintDrink]) {
-    printWindow.innerHTML =  'напиток: ' +  '<strong>' + namePrintDrink + '</strong>' + '<br>'
-      + 'алкогольный: ' + '<strong>' + drinkInfo[0] + '</strong><br>' + 'рецепт приготовления:'
-      + '<br><strong>' + drinkInfo[1] + '</strong>';
-  } else {
-    printWindow.innerHTML = 'Такого напитка нет в базе';
-  }
+  printWindow.innerHTML =  'напиток: ' +  '<strong>' + namePrintDrink + '</strong>' + '<br>'
+    + 'алкогольный: ' + '<strong>' + drinkInfo[0] + '</strong><br>' + 'рецепт приготовления:'
+    + '<br><strong>' + drinkInfo[1] + '</strong>';
 });
 
 document.querySelector('.btn-drink-list').addEventListener('click', function () {
@@ -59,10 +37,6 @@ document.querySelector('.btn-drink-list').addEventListener('click', function () 
 document.querySelector('.btn-delete-drink').addEventListener('click', function () {
   printWindow.innerHTML = '';
   const nameDeleteDrink = document.getElementById('nameDeleteDrink').value;
-  if (drinkStorage[nameDeleteDrink]) {
-    drinkStorage.deleteValue(nameDeleteDrink);
-    printWindow.innerHTML = 'Напиток ' + nameDeleteDrink + ' удалён';
-  } else {
-    printWindow.innerHTML = 'Напиток ' + nameDeleteDrink + ' не найден';
-  }
+  drinkStorage.deleteValue(nameDeleteDrink);
+  printWindow.innerHTML = 'Напиток ' + nameDeleteDrink + ' удалён';
 });
