@@ -5,58 +5,36 @@
 
     var cloneForm = origForm.cloneNode(false);
 
-    var table = document.createElement('table');
-
-    cloneForm.appendChild(table);
-
     formFields.forEach(addFormElement);
 
     parent.replaceChild(cloneForm, origForm);
 
     function addFormElement(obj) {
-      var row = document.createElement('tr');
-      table.appendChild(row);
-      var cal1 = document.createElement('td');
-      row.appendChild(cal1);
       var label = labelCreate(obj.name, obj.label);
-      cal1.appendChild(label);
-      var cal2 = document.createElement('td');
-      row.appendChild(cal2);
+      cloneForm.appendChild(label);
       switch (obj.type) {
         case 'text':
-          var textInput = inputTextCreate(obj);
-          cal2.appendChild(textInput);
+          inputTextAdd(obj);
           break;
 
         case 'radio':
-          var radioInput = inputRadioCreate(obj);
-          for (var i = 0; i < radioInput.length; i++) {
-            cal2.appendChild(radioInput[i]);
-            var labelRadio = labelCreate(obj.variants[i].value, obj.variants[i].text);
-            cal2.appendChild(labelRadio);
-          }
+          inputRadioAdd(obj);
           break;
 
         case 'checkbox':
-          var checkbox = inputCheckboxCreate(obj);
-          cal2.appendChild(checkbox);
+          inputCheckboxAdd(obj);
           break;
 
         case 'select':
-          var select = selectCreate(obj);
-          cal2.appendChild(select);
+          selectAdd(obj);
           break;
+
         case 'textarea':
-          cal1.setAttribute('colspan', 2);
-          var br = document.createElement('br');
-          cal1.appendChild(br);
-          var textarea = textareaCreate(obj);
-          cal1.appendChild(textarea);
+          textareaAdd(obj);
           break;
 
         case 'submit':
-          var submit = submitCreate(obj);
-          cal1.appendChild(submit);
+          submitAdd(obj);
           break;
       }
     }
@@ -77,6 +55,12 @@
       return textInput;
     }
 
+    function inputTextAdd(obj) {
+      var textInput = inputTextCreate(obj);
+      cloneForm.appendChild(textInput);
+      addBr();
+    }
+
     function selectCreate(obj) {
       var select = document.createElement('select');
       select.setAttribute('name', obj.name);
@@ -89,6 +73,12 @@
         select.appendChild(option);
       }
       return select;
+    }
+
+    function selectAdd(obj) {
+      var select = selectCreate(obj);
+      cloneForm.appendChild(select);
+      addBr();
     }
 
     function inputRadioCreate(obj) {
@@ -105,6 +95,16 @@
       return allRadio;
     }
 
+    function inputRadioAdd(obj) {
+      var radioInput = inputRadioCreate(obj);
+      for (var i = 0; i < radioInput.length; i++) {
+        cloneForm.appendChild(radioInput[i]);
+        var labelRadio = labelCreate(obj.variants[i].value, obj.variants[i].text);
+        cloneForm.appendChild(labelRadio);
+        addBr();
+      }
+    }
+
     function inputCheckboxCreate(obj) {
       var checkboxInput = document.createElement('input');
       checkboxInput.setAttribute('name', obj.name);
@@ -112,6 +112,12 @@
       checkboxInput.setAttribute('type', obj.type);
       checkboxInput.setAttribute('value', obj.value);
       return checkboxInput;
+    }
+
+    function inputCheckboxAdd(obj) {
+      var checkbox = inputCheckboxCreate(obj);
+      cloneForm.appendChild(checkbox);
+      addBr();
     }
 
     function textareaCreate(obj) {
@@ -123,12 +129,28 @@
       return textarea;
     }
 
+    function textareaAdd(obj) {
+      var textarea = textareaCreate(obj);
+      cloneForm.appendChild(textarea);
+      addBr();
+    }
+
     function submitCreate(obj) {
       var submit = document.createElement('input');
       submit.setAttribute('value', obj.value);
       submit.setAttribute('type', obj.type);
       submit.setAttribute('style', 'width: ' + obj.width + 'px');
       return submit;
+    }
+
+    function submitAdd(obj) {
+      var submit = submitCreate(obj);
+      cloneForm.appendChild(submit);
+    }
+
+    function addBr() {
+      var br = document.createElement('br');
+      cloneForm.appendChild(br);
     }
   }
 
