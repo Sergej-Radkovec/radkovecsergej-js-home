@@ -4,7 +4,6 @@ var dragImg = null;
 
 var dragShiftX = 0;
 var dragShiftY = 0;
-var zIndex = 0;
 
 var allIMG = document.querySelectorAll('img');
 
@@ -27,7 +26,7 @@ function startDrag(EO) {
     dragShiftX = EO.pageX - dragImg.offsetLeft;
     dragShiftY = EO.pageY - dragImg.offsetTop;
     window.onmousemove = drag;
-    zIndex++;
+    window.addEventListener('mouseup', endDrag);
   }
 }
 
@@ -36,11 +35,12 @@ function drag(EO) {
   dragImg.style.cursor = 'move';
   dragImg.style.left = EO.pageX - dragShiftX + 'px';
   dragImg.style.top = EO.pageY - dragShiftY + 'px';
-  dragImg.style.zIndex = zIndex;
+  dragImg.style.zIndex = 1;
 }
 
 function endDrag() {
   dragImg.style.cursor = 'default';
+  dragImg.style.zIndex = 0;
   dragImg = null;
   window.onmousemove = null;
   dragShiftX = 0;
@@ -49,6 +49,3 @@ function endDrag() {
 
 addAbsolutePos(allIMG);
 window.addEventListener('mousedown', startDrag);
-window.addEventListener('mouseup', endDrag);
-
-
