@@ -1,9 +1,54 @@
 'use strict';
 
-const boardHeight = 400;
-const boardWidth = boardHeight * 1.62;
+const racketWidth = 100;
 const ballRadius = 20;
-const racketWidth = boardHeight / 4;
+
+const area = {
+  height: 400,
+  width: 620
+};
+
+let ball = {
+  posX: area.width / 2 - ballRadius,
+  posY: area.height / 2 - ballRadius,
+  speedX: 30,
+  speedY: 30,
+
+  setBall: function () {
+    const ballObj = document.getElementById('ball');
+    this.posX = area.width / 2 - ballRadius;
+    this.posY = area.height / 2 - ballRadius;
+    ballObj.style.left = this.posX + 'px';
+    ballObj.style.top = this.posY + 'px';
+  },
+
+  update: function () {
+    const ballObj = document.getElementById('ball');
+    ballObj.style.left = this.posX + 'px';
+    ballObj.style.top = this.posY + 'px';
+  }
+};
+
+let racketLeft = {
+  posY: 0,
+  speedY: 50,
+
+  update: function () {
+    const racketObj = document.getElementById('left');
+
+    racketObj.style.top = this.posY + 'px';
+  }
+};
+
+let racketRight = {
+  posY: 0,
+  speedY: 50,
+
+  update: function () {
+    const racketObj = document.getElementById('right');
+    racketObj.style.top = this.posY + 'px';
+  }
+};
 
 var doc = document;
 var container = doc.body;
@@ -12,7 +57,7 @@ container.appendChild(createUI());
 
 function createUI() {
   let game = document.createElement('div');
-  game.style.width = boardWidth + 'px';
+  game.style.width = area.width + 'px';
   game.appendChild(createStartButton());
   game.appendChild(createScores());
   game.appendChild(createBord());
@@ -45,8 +90,8 @@ function createScores() {
 function createBord() {
   let board = document.createElement('div');
   board.id = 'board';
-  board.style.width = boardWidth + 'px';
-  board.style.height = boardHeight + 'px';
+  board.style.width = area.width + 'px';
+  board.style.height = area.height + 'px';
   board.style.backgroundColor = '#F0EE7E';
   board.style.border = '1px solid black';
   board.style.position = 'relative';
@@ -58,16 +103,16 @@ function createBord() {
 }
 
 function createBall() {
-  let ball = document.createElement('div');
-  ball.id = 'ball';
-  ball.style.position = 'absolute';
-  ball.style.backgroundColor = '#F02137';
-  ball.style.borderRadius = '50%';
-  ball.style.width = ballRadius * 2 + 'px';
-  ball.style.height = ballRadius * 2 + 'px';
-  ball.style.top = boardHeight / 2 - ballRadius + 'px';
-  ball.style.left = boardWidth / 2 - ballRadius + 'px';
-  return ball;
+  let ballObj = document.createElement('div');
+  ballObj.id = 'ball';
+  ballObj.style.position = 'absolute';
+  ballObj.style.backgroundColor = '#F02137';
+  ballObj.style.borderRadius = '50%';
+  ballObj.style.width = ballRadius * 2 + 'px';
+  ballObj.style.height = ballRadius * 2 + 'px';
+  ballObj.style.top = ball.posY + 'px';
+  ballObj.style.left = ball.posX + 'px';
+  return ballObj;
 }
 
 function createRacket(pos, color) {
@@ -77,7 +122,7 @@ function createRacket(pos, color) {
   racket.style.width = racketWidth / 10 + 'px';
   racket.style.position = 'absolute';
   racket.style.backgroundColor = color;
-  racket.style.top = boardHeight / 2 - racketWidth / 2 + 'px';
+  racket.style.top = area.height / 2 - racketWidth / 2 + 'px';
   if (pos === 'left') {
     racket.style.left = '0';
   } else {
@@ -86,3 +131,39 @@ function createRacket(pos, color) {
 
   return racket;
 }
+
+document.getElementById('start').addEventListener('click', start);
+
+function tick() {
+  ball.posX += ball.speedX;
+
+  if (ball.posX + ballRadius * 2 > area.width) {
+    ball.speedX = -ball.speedX;
+    ball.posX = area.width - ballRadius * 2;
+  }
+  if (ball.posX < 0) {
+    ball.speedX = -ball.speedX;
+    ball.posX = 0;
+  }
+
+  ball.posY += ball.speedY;
+  if (ball.posY + ballRadius * 2 > area.height) {
+    ball.speedY = -ball.speedY;
+    ball.posY = area.height - ballRadius * 2;
+  }
+
+  if (ball.posY < 0) {
+    ball.speedY = -ball.speedY;
+    ball.posY = 0;
+  }
+  ball.update();
+}
+
+function start() {
+  ball.setBall();
+  setInterval(tick, 60);
+}
+
+
+ball.update();
+
