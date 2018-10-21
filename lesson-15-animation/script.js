@@ -50,6 +50,15 @@ let racketRight = {
   }
 };
 
+let scores = {
+  scoresLeft: 0,
+  scoresRight: 0,
+  update: function () {
+    const scoresObj = document.getElementById('scores');
+    scoresObj.textContent = `${this.scoresLeft}:${this.scoresRight}`;
+  }
+};
+
 var doc = document;
 var container = doc.body;
 
@@ -77,14 +86,14 @@ function createStartButton() {
 }
 
 function createScores() {
-  let scores = document.createElement('p');
-  scores.id = 'scores';
-  scores.style.fontSize = '40px';
-  scores.style.margin = '0';
-  scores.style.textAlign = 'center';
-  scores.textContent = '00:00';
+  let scoresObj = document.createElement('p');
+  scoresObj.id = 'scores';
+  scoresObj.style.fontSize = '40px';
+  scoresObj.style.margin = '0';
+  scoresObj.style.textAlign = 'center';
+  scoresObj.textContent = '0:0';
 
-  return scores;
+  return scoresObj;
 }
 
 function createBord() {
@@ -140,10 +149,14 @@ function tick() {
   if (ball.posX + ballRadius * 2 > area.width) {
     ball.speedX = -ball.speedX;
     ball.posX = area.width - ballRadius * 2;
+    scores.scoresRight += 1;
+    scores.update();
   }
   if (ball.posX < 0) {
     ball.speedX = -ball.speedX;
     ball.posX = 0;
+    scores.scoresLeft += 1;
+    scores.update();
   }
 
   ball.posY += ball.speedY;
@@ -163,7 +176,6 @@ function start() {
   ball.setBall();
   setInterval(tick, 60);
 }
-
 
 ball.update();
 
