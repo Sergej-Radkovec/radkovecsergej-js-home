@@ -11,13 +11,18 @@ const area = {
 let ball = {
   posX: area.width / 2 - ballRadius,
   posY: area.height / 2 - ballRadius,
-  speedX: 30,
-  speedY: 30,
+  speed: 50,
 
   setBall: function () {
     const ballObj = document.getElementById('ball');
     this.posX = area.width / 2 - ballRadius;
     this.posY = area.height / 2 - ballRadius;
+    this.speedY = Math.random() * (this.speed + this.speed / 2.5) - this.speed / 2.5;
+    this.speedX =  Math.sqrt(this.speed * this.speed - this.speedY * this.speedY);
+    if (Math.random() > 0.5) {
+      this.speedX *= -1;
+    }
+
     ballObj.style.left = this.posX + 'px';
     ballObj.style.top = this.posY + 'px';
   },
@@ -147,16 +152,16 @@ function tick() {
   ball.posX += ball.speedX;
 
   if (ball.posX + ballRadius * 2 > area.width) {
-    ball.speedX = -ball.speedX;
     ball.posX = area.width - ballRadius * 2;
     scores.scoresRight += 1;
     scores.update();
+    end();
   }
   if (ball.posX < 0) {
-    ball.speedX = -ball.speedX;
     ball.posX = 0;
     scores.scoresLeft += 1;
     scores.update();
+    end();
   }
 
   ball.posY += ball.speedY;
@@ -172,9 +177,20 @@ function tick() {
   ball.update();
 }
 
+let timer = 0;
+
 function start() {
+  if (timer) {
+    clearInterval(timer);
+    timer = 0;
+  }
+
   ball.setBall();
-  setInterval(tick, 60);
+  timer = setInterval(tick, 60);
+}
+
+function end() {
+  clearInterval(timer);
 }
 
 ball.update();
