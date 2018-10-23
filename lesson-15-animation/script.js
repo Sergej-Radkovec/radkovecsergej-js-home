@@ -1,6 +1,7 @@
 'use strict';
 
-const racketWidth = 100;
+const paddleWidth = 100;
+const paddleBold = paddleWidth / 20;
 const ballRadius = 20;
 
 const area = {
@@ -12,6 +13,7 @@ let ball = {
   posX: area.width / 2 - ballRadius,
   posY: area.height / 2 - ballRadius,
   speed: 50,
+  run: false,
 
   setBall: function () {
     const ballObj = document.getElementById('ball');
@@ -22,7 +24,6 @@ let ball = {
     if (Math.random() > 0.5) {
       this.speedX *= -1;
     }
-
     ballObj.style.left = this.posX + 'px';
     ballObj.style.top = this.posY + 'px';
   },
@@ -34,24 +35,28 @@ let ball = {
   }
 };
 
-let racketLeft = {
-  posY: 0,
-  speedY: 50,
+let paddleLeft = {
+  posY: area.height / 2 - paddleWidth / 2,
+  speed: 20,
+  speedY: 20,
+  shiftPressed: false,
+  controlPressed: false,
 
   update: function () {
-    const racketObj = document.getElementById('left');
-
-    racketObj.style.top = this.posY + 'px';
+    const paddleObj = document.getElementById('left');
+    paddleObj.style.top = this.posY + 'px';
   }
 };
 
-let racketRight = {
-  posY: 0,
-  speedY: 50,
+let paddleRight = {
+  posY: area.height / 2 - paddleWidth / 2,
+  speedY: 20,
+  arrowUpPressed: false,
+  arrowDownPressed: false,
 
   update: function () {
-    const racketObj = document.getElementById('right');
-    racketObj.style.top = this.posY + 'px';
+    const paddleObj = document.getElementById('right');
+    paddleObj.style.top = this.posY + 'px';
   }
 };
 
@@ -110,8 +115,8 @@ function createBord() {
   board.style.border = '1px solid black';
   board.style.position = 'relative';
   board.appendChild(createBall());
-  board.appendChild(createRacket('left', '#09AA57'));
-  board.appendChild(createRacket('right', '#191497'));
+  board.appendChild(createPaddle('left', '#09AA57'));
+  board.appendChild(createPaddle('right', '#191497'));
 
   return board;
 }
@@ -129,39 +134,96 @@ function createBall() {
   return ballObj;
 }
 
-function createRacket(pos, color) {
-  let racket = document.createElement('div');
-  racket.id = pos;
-  racket.style.height = racketWidth + 'px';
-  racket.style.width = racketWidth / 10 + 'px';
-  racket.style.position = 'absolute';
-  racket.style.backgroundColor = color;
-  racket.style.top = area.height / 2 - racketWidth / 2 + 'px';
+function createPaddle(pos, color) {
+  let paddle = document.createElement('div');
+  paddle.id = pos;
+  paddle.style.height = paddleWidth + 'px';
+  paddle.style.width = paddleBold + 'px';
+  paddle.style.position = 'absolute';
+  paddle.style.backgroundColor = color;
+  paddle.style.top = area.height / 2 - paddleWidth / 2 + 'px';
   if (pos === 'left') {
-    racket.style.left = '0';
+    paddle.style.left = '0';
   } else {
-    racket.style.right = '0';
+    paddle.style.right = '0';
   }
 
-  return racket;
+  return paddle;
+}
+
+//  Logic
+
+setInterval(tick, 60);
+
+function tick() {
+  if (ball.run) {
+    posBall();
+  }
+  posPaddle();
 }
 
 document.getElementById('start').addEventListener('click', start);
 
-function tick() {
+function start() {
+  ball.setBall();
+  ball.run = true;
+}
+
+function posPaddle() {
+  if (paddleRight.arrowDownPressed) {
+    paddleRight.posY += paddleRight.speedY;
+  }
+  if (paddleRight.arrowUpPressed) {
+    paddleRight.posY += -paddleRight.speedY;
+    paddleRight.update();
+  }
+  if (paddleRight.posY < 0) {
+    paddleRight.posY = 0;
+  }
+  if (paddleRight.posY + paddleWidth > area.height) {
+    paddleRight.posY = area.height - paddleWidth;
+  }
+  if (paddleLeft.controlPressed) {
+    paddleLeft.posY += paddleLeft.speedY;
+  }
+  if (paddleLeft.shiftPressed) {
+    paddleLeft.posY += -paddleLeft.speedY;
+  }
+  if (paddleLeft.posY < 0) {
+    paddleLeft.posY = 0;
+  }
+  if (paddleLeft.posY + paddleWidth > area.height) {
+    paddleLeft.posY = area.height - paddleWidth;
+  }
+
+  paddleRight.update();
+  paddleLeft.update();
+}
+
+function posBall() {
   ball.posX += ball.speedX;
 
-  if (ball.posX + ballRadius * 2 > area.width) {
-    ball.posX = area.width - ballRadius * 2;
-    scores.scoresRight += 1;
-    scores.update();
-    end();
-  }
-  if (ball.posX < 0) {
+  const paddleLeftObj = document.getElementById('left');
+  const paddleRightObj = document.getElementById('right');
+
+  if (ball.posX < 0 && ball.posY + ballRadius > paddleLeftObj.offsetTop && ball.posY - ballRadius < paddleLeftObj.offsetTop + paddleWidth) {
+    ball.posX = paddleBold;
+    ball.speedX = -ball.speedX;
+  } else if (ball.posX < 0) {
     ball.posX = 0;
     scores.scoresLeft += 1;
     scores.update();
-    end();
+    ball.run = false;
+  }
+
+  if (ball.posX + ballRadius * 2 > area.width && ball.posY + ballRadius > paddleRightObj.offsetTop && ball.posY - ballRadius < paddleRightObj.offsetTop + paddleWidth) {
+    ball.posX = area.width - ballRadius * 2 - paddleBold;
+    ball.speedX = -ball.speedX;
+  } else if (ball.posX + ballRadius * 2 > area.width) {
+    ball.posX = area.width - ballRadius * 2;
+    scores.scoresRight += 1;
+    scores.update();
+    ball.run = false;
   }
 
   ball.posY += ball.speedY;
@@ -177,21 +239,33 @@ function tick() {
   ball.update();
 }
 
-let timer = 0;
+document.addEventListener('keydown', keyDownHandler, false);
+document.addEventListener('keyup', keyUpHandler, false);
 
-function start() {
-  if (timer) {
-    clearInterval(timer);
-    timer = 0;
+function keyDownHandler(e) {
+  if (e.keyCode === 38) {
+    paddleRight.arrowUpPressed = true;
+  } else if (e.keyCode === 40) {
+    paddleRight.arrowDownPressed = true;
   }
 
-  ball.setBall();
-  timer = setInterval(tick, 60);
+  if (e.keyCode === 16) {
+    paddleLeft.shiftPressed = true;
+  } else if (e.keyCode === 17) {
+    paddleLeft.controlPressed = true;
+  }
 }
 
-function end() {
-  clearInterval(timer);
+function keyUpHandler(e) {
+  if (e.keyCode === 38) {
+    paddleRight.arrowUpPressed = false;
+  } else if (e.keyCode === 40) {
+    paddleRight.arrowDownPressed = false;
+  }
+
+  if (e.keyCode === 16) {
+    paddleLeft.shiftPressed = false;
+  } else if (e.keyCode === 17) {
+    paddleLeft.controlPressed = false;
+  }
 }
-
-ball.update();
-
