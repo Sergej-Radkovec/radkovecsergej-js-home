@@ -12,14 +12,14 @@ const area = {
 let ball = {
   posX: area.width / 2 - ballRadius,
   posY: area.height / 2 - ballRadius,
-  speed: 50,
+  speed: 40,
   run: false,
 
-  setBall: function () {
+  runBall: function () {
     const ballObj = document.getElementById('ball');
     this.posX = area.width / 2 - ballRadius;
     this.posY = area.height / 2 - ballRadius;
-    this.speedY = Math.random() * (this.speed + this.speed / 2.5) - this.speed / 2.5;
+    this.speedY = Math.random() * (this.speed + this.speed / 3) - this.speed / 3;
     this.speedX =  Math.sqrt(this.speed * this.speed - this.speedY * this.speedY);
     if (Math.random() > 0.5) {
       this.speedX *= -1;
@@ -68,6 +68,8 @@ let scores = {
     scoresObj.textContent = `${this.scoresLeft}:${this.scoresRight}`;
   }
 };
+
+// UI
 
 var doc = document;
 var container = doc.body;
@@ -165,39 +167,8 @@ function tick() {
 document.getElementById('start').addEventListener('click', start);
 
 function start() {
-  ball.setBall();
+  ball.runBall();
   ball.run = true;
-}
-
-function posPaddle() {
-  if (paddleRight.arrowDownPressed) {
-    paddleRight.posY += paddleRight.speedY;
-  }
-  if (paddleRight.arrowUpPressed) {
-    paddleRight.posY += -paddleRight.speedY;
-    paddleRight.update();
-  }
-  if (paddleRight.posY < 0) {
-    paddleRight.posY = 0;
-  }
-  if (paddleRight.posY + paddleWidth > area.height) {
-    paddleRight.posY = area.height - paddleWidth;
-  }
-  if (paddleLeft.controlPressed) {
-    paddleLeft.posY += paddleLeft.speedY;
-  }
-  if (paddleLeft.shiftPressed) {
-    paddleLeft.posY += -paddleLeft.speedY;
-  }
-  if (paddleLeft.posY < 0) {
-    paddleLeft.posY = 0;
-  }
-  if (paddleLeft.posY + paddleWidth > area.height) {
-    paddleLeft.posY = area.height - paddleWidth;
-  }
-
-  paddleRight.update();
-  paddleLeft.update();
 }
 
 function posBall() {
@@ -206,7 +177,7 @@ function posBall() {
   const paddleLeftObj = document.getElementById('left');
   const paddleRightObj = document.getElementById('right');
 
-  if (ball.posX < 0 && ball.posY + ballRadius > paddleLeftObj.offsetTop && ball.posY - ballRadius < paddleLeftObj.offsetTop + paddleWidth) {
+  if (ball.posX < paddleBold && ball.posY > paddleLeftObj.offsetTop - ballRadius && ball.posY + ballRadius < paddleLeftObj.offsetTop + paddleWidth) {
     ball.posX = paddleBold;
     ball.speedX = -ball.speedX;
   } else if (ball.posX < 0) {
@@ -216,7 +187,7 @@ function posBall() {
     ball.run = false;
   }
 
-  if (ball.posX + ballRadius * 2 > area.width && ball.posY + ballRadius > paddleRightObj.offsetTop && ball.posY - ballRadius < paddleRightObj.offsetTop + paddleWidth) {
+  if (ball.posX + ballRadius * 2 > area.width - paddleBold && ball.posY > paddleRightObj.offsetTop - ballRadius && ball.posY + ballRadius < paddleRightObj.offsetTop + paddleWidth) {
     ball.posX = area.width - ballRadius * 2 - paddleBold;
     ball.speedX = -ball.speedX;
   } else if (ball.posX + ballRadius * 2 > area.width) {
@@ -268,4 +239,35 @@ function keyUpHandler(e) {
   } else if (e.keyCode === 17) {
     paddleLeft.controlPressed = false;
   }
+}
+
+function posPaddle() {
+  if (paddleRight.arrowDownPressed) {
+    paddleRight.posY += paddleRight.speedY;
+  }
+  if (paddleRight.arrowUpPressed) {
+    paddleRight.posY += -paddleRight.speedY;
+    paddleRight.update();
+  }
+  if (paddleRight.posY < 0) {
+    paddleRight.posY = 0;
+  }
+  if (paddleRight.posY + paddleWidth > area.height) {
+    paddleRight.posY = area.height - paddleWidth;
+  }
+  if (paddleLeft.controlPressed) {
+    paddleLeft.posY += paddleLeft.speedY;
+  }
+  if (paddleLeft.shiftPressed) {
+    paddleLeft.posY += -paddleLeft.speedY;
+  }
+  if (paddleLeft.posY < 0) {
+    paddleLeft.posY = 0;
+  }
+  if (paddleLeft.posY + paddleWidth > area.height) {
+    paddleLeft.posY = area.height - paddleWidth;
+  }
+
+  paddleRight.update();
+  paddleLeft.update();
 }
