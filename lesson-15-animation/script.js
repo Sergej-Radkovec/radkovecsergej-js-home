@@ -1,18 +1,18 @@
 'use strict';
 
-const paddleWidth = 100;
-const paddleBold = paddleWidth / 20;
-const ballRadius = 20;
+const paddleWidth = 150; //  длина рокетки
+const paddleBold = paddleWidth / 20; //  толщина рокетки
+const ballRadius = 20; //  радиус шарика
 
 const area = {
-  height: 400,
-  width: 620
+  height: 400,  //  высота поля
+  width: 620  //  ширина поля
 };
 
 let ball = {
   posX: area.width / 2 - ballRadius,
   posY: area.height / 2 - ballRadius,
-  speed: 40,
+  speed: 30, // скорость шарика
   run: false,
 
   runBall: function () {
@@ -37,8 +37,7 @@ let ball = {
 
 let paddleLeft = {
   posY: area.height / 2 - paddleWidth / 2,
-  speed: 20,
-  speedY: 20,
+  speedY: 20, // скорость левой рокетки
   shiftPressed: false,
   controlPressed: false,
 
@@ -50,7 +49,7 @@ let paddleLeft = {
 
 let paddleRight = {
   posY: area.height / 2 - paddleWidth / 2,
-  speedY: 20,
+  speedY: 20, // скорость правой рокетки
   arrowUpPressed: false,
   arrowDownPressed: false,
 
@@ -71,10 +70,7 @@ let scores = {
 
 // UI
 
-var doc = document;
-var container = doc.body;
-
-container.appendChild(createUI());
+document.body.appendChild(createUI());
 
 function createUI() {
   let game = document.createElement('div');
