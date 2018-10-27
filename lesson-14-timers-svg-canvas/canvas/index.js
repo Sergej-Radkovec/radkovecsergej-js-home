@@ -1,13 +1,13 @@
 'use strict';
-const baseRadius = 300;
-const numbersBaseRadius = baseRadius / 1.2;
-const circleRadius = 30;
-const arrowHourWidth = 150;
-const arrowMinuteWidth = 200;
-const arrowSecondWidth = 250;
-const arrowHourBold = 20;
-const arrowMinuteBold = 10;
-const arrowSecondBold = 2;
+const baseRadius = 300; // радиус часов
+const numbersBaseRadius = baseRadius / 1.2; // радиус циферблата
+const circleRadius = 30; // радиус кружков с цифрами
+const arrowHourWidth = 150; // длина часовой стрелки
+const arrowMinuteWidth = 200; // длина минутной стрелки
+const arrowSecondWidth = 250; // длина секундной стрелки
+const arrowHourBold = 20; // толщина часовой стрелки
+const arrowMinuteBold = 10; // толщина минутной стрелки
+const arrowSecondBold = 2; // толщина секундной стрелки
 
 const canvas = document.querySelector('#canvas');
 const context = canvas.getContext('2d');
@@ -16,6 +16,16 @@ canvas.width = baseRadius * 2;
 canvas.height = baseRadius * 2;
 
 setInterval(tickTimer, 1000);
+
+function tickTimer() {
+  let now = new Date();
+  let thisSecond = now.getSeconds();
+  let thisMinute = now.getMinutes();
+  let thisHour   = now.getHours();
+  createClock();
+  updateDigitalWatch(thisHour, thisMinute, thisSecond);
+  updateWatch(thisHour, thisMinute, thisSecond);
+}
 
 function createClock() {
   createBase();
@@ -27,7 +37,6 @@ function createBase() {
   context.beginPath();
   context.arc(baseRadius, baseRadius, baseRadius, 0, Math.PI/0.5);
   context.fill();
-  context.closePath();
 }
 
 function createClockFace() {
@@ -45,7 +54,6 @@ function createHourCircle(circleX, circleY) {
   context.fillStyle = 'green';
   context.arc(circleX, circleY, circleRadius, 0, Math.PI / 0.5);
   context.fill();
-  context.closePath();
 }
 
 function createNumberCircle(circleX, circleY, number) {
@@ -73,16 +81,6 @@ function createArrow(arrowWidth, arrowBold, x, y) {
   context.lineTo(baseRadius, baseRadius);
   context.stroke();
   context.closePath();
-}
-
-function tickTimer() {
-  let now = new Date();
-  let thisSecond = now.getSeconds();
-  let thisMinute = now.getMinutes();
-  let thisHour   = now.getHours();
-  createClock();
-  updateDigitalWatch(thisHour, thisMinute, thisSecond);
-  updateWatch(thisHour, thisMinute, thisSecond);
 }
 
 function updateWatch(hour, minute, second) {

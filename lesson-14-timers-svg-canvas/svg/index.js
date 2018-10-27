@@ -1,13 +1,12 @@
 'use strict';
-const baseRadius = 300;
-const numbersBaseRadius = baseRadius / 1.2;
-const circleRadius = 30;
+const baseRadius = 300; // радиус часов
+const numbersBaseRadius = baseRadius / 1.2; // радиус циферблата
+const circleRadius = 30; // радиус кружков с цифрами
 const wrapper = document.getElementById('wrapper');
 wrapper.setAttribute('width', baseRadius * 2);
 wrapper.setAttribute('height', baseRadius * 2);
 
 createClock(wrapper);
-setInterval(tickTimer, 1000);
 
 function createClock(container) {
   container.appendChild(createBase());
@@ -84,6 +83,8 @@ function createArrow(arrowType, arrowWidth, arrowBold) {
   return arrow;
 }
 
+setInterval(tickTimer, 1000);
+
 function tickTimer() {
   let now = new Date();
   let thisSecond = now.getSeconds();
@@ -93,7 +94,7 @@ function tickTimer() {
   updateDigitalWatch(thisHour, thisMinute, thisSecond);
 }
 
-function updateWatch(hour, minute, second){
+function updateWatch(hour, minute, second) {
   let thisSecondRotate = (second / 60) * 360 - 90;
   let thisMinuteRotate = (minute) / 60 * 360 - 90;
   let thisHourRotate   = (hour + minute / 60) / 12 * 360 - 90;
