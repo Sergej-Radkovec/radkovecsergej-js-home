@@ -4,17 +4,12 @@ function TLocalStorage(name) {
   const self = this;
   let nameStorage = name;
   let pHash = {};
-
-  if (localStorage[nameStorage] !== undefined) {
-    document.addEventListener('DOMContentLoaded', reset);
-  }
-
-  function reset() {
-    pHash = JSON.parse(localStorage[nameStorage])
+  if (nameStorage in localStorage) {
+    pHash = JSON.parse(localStorage[nameStorage]);
   }
 
   function saveHash() {
-    localStorage[name] = JSON.stringify(pHash)
+    localStorage[name] = JSON.stringify(pHash);
   }
 
   self.addValue = function (key, value) {
