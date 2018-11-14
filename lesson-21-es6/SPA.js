@@ -1,46 +1,83 @@
 'use strict';
 
+const AjaxHandlerScript = "http://fe.it-academy.by/TestAjax2.php";
 window.onhashchange = renderNewState;
+let coursesArray = [];
+
 function renderNewState() {
   const hash = window.location.hash;
   let state = decodeURIComponent(hash.substr(1));
 
   if (state === '') {
-    state = {page: 'first'};
-  } else {
-    state = JSON.parse(state);
+    state = 'main';
   }
 
   let page = '';
+  const id = parseInt(state.replace(/\D+/g, ''));
 
-  switch(state.page) {
+  switch(state) {
     case 'main':
-      page ;
+      page += '<h1>Энциклопедия</h1>';
+      page += '<a href="#content">список статей здесь</a>';
+      document.getElementById('page').innerHTML = page;
       break;
     case 'content':
-      page ;
+      $.ajax(AjaxHandlerScript, {
+        type: 'GET', dataType: 'json',
+        data: {func: 'COURSES_JSON'},
+        success: coursesList, error: errorHandler
+      });
       break;
-    case 'item':
-      page ;
+    case `item-${id}`:
+       $.ajax(AjaxHandlerScript, {
+          type: 'GET', dataType: 'html', data: {func: 'COURSE_INFO', id: id},
+          success: courseInfo, error: errorHandler
+      });
       break;
   }
-  generatePage(page);
 }
 
-function generatePage(page) {
-
-}
-
-function switchToState(state) {
-  location.hash = encodeURIComponent(JSON.stringify(state));
-}
-function switchToMain() {
-  switchToState({page: 'main'});
-}
-function switchToContent() {
-  switchToState({page: 'content'});
-}
-function switchToItem() {
-  switchToState({page: 'item'});
-}
 renderNewState();
+
+function coursesList(data) {
+  let page = '';
+  page += '<h1>Оглавление</h1>';
+  let tmp = {};
+  data.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
+
+  data.forEach(elem => {
+    let name = elem.name;
+    let firstLetter = name.charAt(0).toUpperCase();
+    if (!tmp[firstLetter]) {
+      tmp[firstLetter] = 1;
+      page += `<h2>${firstLetter}</h2>`;
+      page += `<a href="#item-${elem.id}">${name}</a><br>`;
+    } else {
+      page += `<a href="#item-${elem.id}">${name}</a><br>`;
+    }
+  });
+  coursesArray = data;
+  document.getElementById('page').innerHTML = page;
+}
+
+function courseInfo(data) {
+  let page = '';
+  page += '<div style="display: inline-block; width: 30%">';
+  for (let i = 0; i < 5; i++) {
+    page += `<a href="#item-${coursesArray[i].id}">${coursesArray[i].name}</a><br>`;
+  }
+  page += '</div>';
+  page += `<div style="display: inline-block; width: 60%">
+              <h2>Название статьи</h2>
+              <p>${data}</p>
+          </div>`;
+  document.getElementById('page').innerHTML = page;
+}
+
+function errorHandler(jqXHR, StatusStr, ErrorStr) {
+  alert(StatusStr + ' ' + ErrorStr);
+}
