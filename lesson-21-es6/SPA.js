@@ -22,6 +22,8 @@ function renderNewState() {
       document.getElementById('page').innerHTML = page;
       break;
     case 'content':
+      page += '<h3>Идёт загрузка страницы....</h3>';
+      document.getElementById('page').innerHTML = page;
       $.ajax(AjaxHandlerScript, {
         type: 'GET', dataType: 'json',
         data: {func: 'COURSES_JSON'},
@@ -29,6 +31,8 @@ function renderNewState() {
       });
       break;
     case `item-${id}`:
+      page += '<h3>Идёт загрузка страницы....</h3>';
+      document.getElementById('page').innerHTML = page;
        $.ajax(AjaxHandlerScript, {
           type: 'GET', dataType: 'html', data: {func: 'COURSE_INFO', id: id},
           success: courseInfo, error: errorHandler
@@ -79,5 +83,8 @@ function courseInfo(data) {
 }
 
 function errorHandler(jqXHR, StatusStr, ErrorStr) {
-  alert(StatusStr + ' ' + ErrorStr);
+  let page = '';
+  page += '<h3>Что то пошло не так, попробуйте позже</h3>';
+  document.getElementById('page').innerHTML = page;
+  console.log(StatusStr + ' ' + ErrorStr);
 }
