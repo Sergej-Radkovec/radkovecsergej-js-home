@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .drink {
+      display: inline-block;
+      margin: 30px;
+    }
+  </style>
+</head>
+<body>
+<div class="drink">
+  <div>
+    <form name="saveDrink">
+      <label for="nameDrinks">Напиток:</label><br>
+      <input type="text" name="nameDrinks" id="nameDrinks"><br>
+      <fieldset style="display: inline-block" name="info">
+        <legend>Информация о напитке</legend>
+        <label for="true">Алкогольный</label>
+        <input type="radio" name="alcohol" id="true" value="Да">
+        <label for="false">Безалкогольный</label>
+        <input type="radio" name="alcohol" id="false" value="Нет"><br>
+        <label for="recipeDrink">Рецепт приготовления</label><br>
+        <textarea name="recipeDrink" id="recipeDrink" rows="10" cols="30"></textarea>
+      </fieldset><br>
+    </form>
+    <button class="btn-save-drink">Ввести информацию о напитке</button>
+  </div>
+  <br>
+  <div>
+    <input type="text" name="nameDrink" id="nameDrink">
+    <button class="btn-print-drink-info">Вывести информацию о напитке</button>
+  </div>
+  <br>
+  <div>
+    <button class="btn-drink-list">Перечень всех напитков</button>
+  </div>
+  <br>
+  <div>
+    <input type="text" name="nameDeleteDrink" id="nameDeleteDrink">
+    <button class="btn-delete-drink">Удаление информации о напитке</button>
+  </div>
+  <br>
+</div>
+<div class="printWindow"></div>
+<script src='http://code.jquery.com/jquery-latest.js'></script>
+<script src="AJAXStorage.js"></script>
+<script src="drinkStorage.js"></script>
+</body>
+</html>
