@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  </head>
+  <body>
+    <div>
+      <div>
+        <form name="save">
+          <label for="name">Напиток:</label><br>
+          <input type="text" name="name" id="name"><br>
+          <fieldset style="display: inline-block" name="info">
+            <legend>Информация о напитке</legend>
+            <label for="true">Алкогольный</label>
+            <input type="radio" name="alcohol" id="true" value="Да">
+            <label for="false">Безалкогольный</label>
+            <input type="radio" name="alcohol" id="false" value="Нет"><br>
+            <label for="recipe">Рецепт приготовления</label><br>
+            <textarea name="recipe" id="recipe" rows="10" cols="30"></textarea>
+          </fieldset><br>
+        </form>
+        <button class="btn-save">Ввести информацию о напитке</button>
+      </div>
+      <br>
+      <div>
+        <input type="text" name="nameDrink" id="nameDrink">
+        <button class="btn-print-info">Вывести информацию о напитке</button>
+      </div>
+      <br>
+      <div>
+        <button class="btn-drink-list">Перечень всех напитков</button>
+      </div>
+      <br>
+      <div>
+        <input type="text" name="nameDeleteDrink" id="nameDeleteDrink">
+        <button class="btn-delete-drink">Удаление информации о напитке</button>
+      </div>
+      <br>
+      <div class="printWindow"></div>
+    </div>
+    <script src="hashstorage.js"></script>
+    <script src="drinkstorage.js"></script>
+  </body>
+</html>
