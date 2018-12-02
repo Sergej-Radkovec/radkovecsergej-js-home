@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .drink, .dish {
+      display: inline-block;
+      margin: 30px;
+    }
+  </style>
+</head>
+  <body>
+    <div class="drink">
+      <div>
+        <form name="saveDrink">
+          <label for="nameDrinks">Напиток:</label><br>
+          <input type="text" name="nameDrinks" id="nameDrinks"><br>
+          <fieldset style="display: inline-block" name="info">
+            <legend>Информация о напитке</legend>
+            <label for="true">Алкогольный</label>
+            <input type="radio" name="alcohol" id="true" value="Да">
+            <label for="false">Безалкогольный</label>
+            <input type="radio" name="alcohol" id="false" value="Нет"><br>
+            <label for="recipeDrink">Рецепт приготовления</label><br>
+            <textarea name="recipeDrink" id="recipeDrink" rows="10" cols="30"></textarea>
+          </fieldset><br>
+        </form>
+        <button class="btn-save-drink">Ввести информацию о напитке</button>
+      </div>
+      <br>
+      <div>
+        <input type="text" name="nameDrink" id="nameDrink">
+        <button class="btn-print-drink-info">Вывести информацию о напитке</button>
+      </div>
+      <br>
+      <div>
+        <button class="btn-drink-list">Перечень всех напитков</button>
+      </div>
+      <br>
+      <div>
+        <input type="text" name="nameDeleteDrink" id="nameDeleteDrink">
+        <button class="btn-delete-drink">Удаление информации о напитке</button>
+      </div>
+      <br>
+    </div>
+    <div class="dish">
+      <div>
+        <form name="saveDish">
+          <label for="nameDishs">Блюдо:</label><br>
+          <input type="text" name="nameDishs" id="nameDishs"><br>
+          <fieldset style="display: inline-block" name="info">
+            <legend>Информация о блюде</legend>
+            <label for="true">Жаренное</label>
+            <input type="radio" name="status" id="true" value="Да">
+            <label for="false">Вареное</label>
+            <input type="radio" name="status" id="false" value="Нет"><br>
+            <label for="recipeDish">Рецепт приготовления</label><br>
+            <textarea name="recipeDish" id="recipeDish" rows="10" cols="30"></textarea>
+          </fieldset><br>
+        </form>
+        <button class="btn-save-dish">Ввести информацию о блюде</button>
+      </div>
+      <br>
+      <div>
+        <input type="text" name="nameDish" id="nameDish">
+        <button class="btn-print-dish-info">Вывести информацию о блюде</button>
+      </div>
+      <br>
+      <div>
+        <button class="btn-dish-list">Перечень всех блюд</button>
+      </div>
+      <br>
+      <div>
+        <input type="text" name="nameDeleteDish" id="nameDeleteDish">
+        <button class="btn-delete-dish">Удаление информации о блюде</button>
+      </div>
+      <br>
+    </div>
+    <div class="printWindow"></div>
+    <script src="localStorage.js"></script>
+    <script src="drinkStorage.js"></script>
+    <script src="dishStorage.js"></script>
+  </body>
+</html>
